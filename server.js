@@ -5,7 +5,6 @@ const app       = express();
 const OpenTok   = require('opentok');
 const cors      = require('cors');
 const fs        = require('fs');
-const http      = require('http');
 const https     = require('https');
 const readline  = require('readline');
 
@@ -39,6 +38,7 @@ app.post('/session', function (req, res) {
             fileStream.write(session.sessionId);
 
             res.end(JSON.stringify({
+                status: true,
                 session: session.sessionId,
                 token: opentok.generateToken(session.sessionId)
             }));
@@ -60,6 +60,7 @@ app.get('/session/:id', async function (req, res) {
     }
 
     res.end(JSON.stringify({
+        status: true,
         sessionId: data[0],
         token: opentok.generateToken(data[0]),
         apiKey: process.env.OPENTOK_API_KEY,
